@@ -1,17 +1,17 @@
 .post {
-    max-width: 500px;
+    width: 70.5%;
     background-color: white;
-    border: 1px solid lightgray;
-    margin-bottom: 45px;
-    margin-left: auto;
-    margin-right: auto;
+    border: 1px solid rgb(240, 240, 240);
+    margin-top: 45px;
+    margin-left: 14.5%;
+    box-shadow: 0 1rem 2rem #a0a0a0;
+    display: inline-flex;
+    overflow-x: hidden;
 }
 
 .post__image {
-    width: 100%;
+    max-width: 500px;
     object-fit: contain;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
 }
 
 .post__text {
@@ -30,4 +30,13 @@
 
 .post__text {
     padding: 20px
+}
+
+.post__username__caption {
+    max-width: 500px;
+    padding: 10px;
+}
+
+.post__username__picture {
+    border-right: 1px solid rgb(240, 240, 240);
 }

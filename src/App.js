@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Post from './Post';
-import Logo from "./logo.png";
+import Logo from "./logo5.svg";
 import Cat from "./cat.jpg";
 import './App.css';
 import { db } from './Firebase';
@@ -91,9 +91,28 @@ function App() {
           src={Logo}
           alt=""
         />
-      </div>
 
-      <Button onClick={() => setOpen(true)}>Register</Button>
+      <div className="nav">
+        <Button 
+          style={{
+            fontSize: "15px",
+            color: "#eae7dc"
+          }}
+          onClick={() => setOpen(true)}
+        >
+          Log In
+        </Button>
+        <Button 
+          style={{
+            fontSize: "15px",
+            color: "#eae7dc"
+          }}
+          onClick={() => setOpen(true)}
+        >
+          Register
+        </Button>
+      </div>
+      </div>
 
       {
         posts.map(post => (
