@@ -1,6 +1,5 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Logo from "./0.jpeg";
 import './Post.css';
 
 function Post({username, caption, imageUrl}) {
@@ -23,7 +22,7 @@ function Post({username, caption, imageUrl}) {
 
             <div className="post__username__caption">
                 {/* Username + Caption*/}
-                <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
+                <h4 className="post__text"><strong>{username}</strong>: {caption}</h4>
             </div>
         </div>
     )
