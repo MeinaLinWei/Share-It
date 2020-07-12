@@ -49,6 +49,7 @@ function App() {
   ]);
 
   const[open, setOpen] = useState(false); // default value is false
+  const[openLogIn, setOpenLogIn] = useState(false);
   const[username, setUsername] = useState(''); 
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
@@ -88,16 +89,29 @@ function App() {
 
   }, []);
 
-  const signUp = (event) => {
+  const register = (event) => {
     event.preventDefault();
 
-    auth.createUserWithEmailAndPassword(email,password)
+    auth
+    .createUserWithEmailAndPassword(email,password)
     .then((authUser) => {
       return authUser.user.updateProfile({
         displayName: username
       })
     })
-    .catch((error)=>alert(error.message))
+    .catch((error) => alert(error.message))
+
+    setOpen(false);
+  };
+
+  const logIn = (event) => {
+    event.preventDefault();
+    
+    auth
+    .signInWithEmailAndPassword(email, password)
+    .catch((error) => alert(error.message))
+
+    setOpenLogIn(false);
   };
 
   {/* 
@@ -111,20 +125,17 @@ function App() {
     <div className="app">
 
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openLogIn}
+        onClose={() => setOpenLogIn(false)}
       >
       
       <div style={modalStyle} className={classes.paper}>
         <center>
-        <form className="app__signup">
-          <Input
-            placeholder="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-
+          <div className="app__register__login__welcometext">
+            Welcome back to SHARE IT! <br></br>
+            It's nice to see you again 😄
+          </div>
+        <form className="app__register__login">
           <Input
             placeholder="email"
             type="text"
@@ -139,9 +150,51 @@ function App() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br></br>
-          <Button type="submit" onClick={signUp}>Submit</Button>
+          <Button type="submit" onClick={logIn}>Submit</Button>
 
         </form>
+        </center>
+      </div>
+ 
+      </Modal>
+
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+      
+      <div style={modalStyle} className={classes.paper}>
+        <center>
+          <div className="app__register__login__welcometext">
+            Welcome to SHARE IT ✨ <br></br>
+            Please complete the form below to become a member.
+          </div>
+          <form className="app__register__login">
+            <Input
+              placeholder="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <Input
+              placeholder="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <br></br>
+
+            <Button type="submit" onClick={register}>Submit</Button>
+          </form>
         </center>
       </div>
  
@@ -168,25 +221,25 @@ function App() {
           Log Out
         </Button>
       ) : (
-        <div>
-        <Button 
-          style={{
-            fontSize: "15px",
-            color: "#eae7dc"
-          }}
-          onClick={() => setOpen(true)}
-        >
-          Log In
-        </Button>
-        <Button 
-          style={{
-            fontSize: "15px",
-            color: "#eae7dc"
-          }}
-          onClick={() => setOpen(true)}
-        >
-          Register
-        </Button>
+        <div className="app__LogIn__Register">
+          <Button 
+            style={{
+              fontSize: "15px",
+              color: "#eae7dc"
+            }}
+            onClick={() => setOpenLogIn(true)}
+          >
+            Log In
+          </Button>
+          <Button 
+            style={{
+              fontSize: "15px",
+              color: "#eae7dc"
+            }}
+            onClick={() => setOpen(true)}
+          >
+            Register
+          </Button>
         </div>
       )}
       </div>

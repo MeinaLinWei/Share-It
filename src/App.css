@@ -18,8 +18,12 @@
   padding: 43px 10px 0 0;
 }
 
-.app__signup {
+.app__register__login {
   font-size: 50px;
-  
 }
 
+.app__register__login__welcometext {
+  font-size: 20px;
+  margin:20px;
+
+}
