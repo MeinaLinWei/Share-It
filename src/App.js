@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import Post from './Post';
-import Logo from "./logo.svg";
+import Post from './post/Post';
+import Logo from "./images/logo.svg";
 import './App.css';
 import { db, auth } from './Firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input, handleLogin } from '@material-ui/core';
-import UploadImage from './UploadImage'
+import UploadImage from './post/UploadImage'
 
 
 function getModalStyle() {
@@ -120,33 +120,33 @@ function App() {
             onClose={() => setOpenLogIn(false)}
         >
         
-        <div style={modalStyle} className={classes.paper}>
-            <center>
-            <div className="app__register__login__welcometext">
-                Welcome back to SHARE IT! <br></br>
-                It's nice to see you again 😄
+            <div style={modalStyle} className={classes.paper}>
+                <center>
+                    <div className="app__login-register-welcome-text">
+                        Welcome back to SHARE IT! <br></br>
+                        It's nice to see you again 😄
+                    </div>
+                    <form className="app__login-register">
+                        <Input
+                            placeholder="email"
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+
+                        <Input
+                            placeholder="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <br></br>
+
+                        <Button type="submit" onClick={logIn}>Submit</Button>
+                    </form>
+                </center>
             </div>
-            <form className="app__register__login">
-            <Input
-                placeholder="email"
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
 
-            <Input
-                placeholder="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <br></br>
-            <Button type="submit" onClick={logIn}>Submit</Button>
-
-            </form>
-            </center>
-        </div>
-    
         </Modal>
 
         <Modal
@@ -154,93 +154,86 @@ function App() {
             onClose={() => setOpen(false)}
         >
         
-        <div style={modalStyle} className={classes.paper}>
-            <center>
-            <div className="app__register__login__welcometext">
-                Welcome to SHARE IT ✨ <br></br>
-                Please complete the form below to become a member.
+            <div style={modalStyle} className={classes.paper}>
+                <center>
+                    <div className="app__login-register-welcome-text">
+                        Welcome to SHARE IT ✨ <br></br>
+                        Please complete the form below to become a member.
+                    </div>
+                    <form className="app__login-register">
+                        <Input
+                            placeholder="username"
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+
+                        <Input
+                            placeholder="email"
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+
+                        <Input
+                            placeholder="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <br></br>
+
+                        <Button type="submit" onClick={register}>Submit</Button>
+                    </form>
+                </center>
             </div>
-            <form className="app__register__login">
-                <Input
-                placeholder="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                />
-
-                <Input
-                placeholder="email"
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                />
-
-                <Input
-                placeholder="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-
-                <br></br>
-
-                <Button type="submit" onClick={register}>Submit</Button>
-            </form>
-            </center>
-        </div>
     
         </Modal>
 
         {/* Header */}
-        <div className="app__header">
-            <img 
-            className="app__header__Image"
-            src={Logo}
-            alt=""
-            />
+        <div className="app__header"> <img className="app__header-image" src={Logo} alt="" />
+            <div className="nav">
+                { user ? (
+                    <Button 
+                        style={{
+                            fontSize: "15px",
+                            color: "#eae7dc"
+                        }}
+                        onClick={() => auth.signOut()}
+                    >
+                        Log Out
+                    </Button>
+                ) : (
+                    <div>
+                        <Button 
+                            style={{
+                                fontSize: "15px",
+                                color: "#eae7dc"
+                            }}
+                            onClick={() => setOpenLogIn(true)}
+                        >
+                            Log In
+                        </Button>
 
-        <div className="nav">
-
-        { user ? (
-            <Button 
-            style={{
-                fontSize: "15px",
-                color: "#eae7dc"
-            }}
-            onClick={() => auth.signOut()}
-            >
-            Log Out
-            </Button>
-        ) : (
-            <div className="app__LogIn__Register">
-            <Button 
-                style={{
-                fontSize: "15px",
-                color: "#eae7dc"
-                }}
-                onClick={() => setOpenLogIn(true)}
-            >
-                Log In
-            </Button>
-            <Button 
-                style={{
-                fontSize: "15px",
-                color: "#eae7dc"
-                }}
-                onClick={() => setOpen(true)}
-            >
-                Register
-            </Button>
+                        <Button 
+                            style={{
+                                fontSize: "15px",
+                                color: "#eae7dc"
+                            }}
+                            onClick={() => setOpen(true)}
+                        >
+                            Register
+                        </Button>
+                    </div>
+                )}
             </div>
-        )}
-        </div>
         </div>
 
         <div className="app__upload">
             {user?.displayName ? ( // the ? is an optional, basically a try catch statement
-            <UploadImage username={user.displayName}/>
+                <UploadImage username={user.displayName}/>
             ) : (
-            <h3>Login to upload an image</h3>
+                <div />
             )}
         </div>
     
