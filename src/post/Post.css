@@ -1,0 +1,48 @@
+.post {
+    width: 70.5%;
+    background-color: white;
+    border: 1px solid rgb(240, 240, 240);
+    margin-top: 45px;
+    margin-left: 14.5%;
+    box-shadow: 0 1rem 2rem #a0a0a0;
+    display: inline-flex;
+    overflow-x: hidden;
+}
+
+.post__image {
+    max-width: 500px;
+    object-fit: contain;
+}
+
+.post__text {
+    font-weight: normal;
+}
+
+.post__header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.post__avatar {
+    margin-right: 10px;
+}
+
+.post__text {
+    padding: 20px
+}
+
+.post__username__caption {
+    max-width: 500px;
+    padding: 10px;
+}
+
+.post__username__picture {
+    border-right: 1px solid rgb(240, 240, 240);
+}
+
+.upload-image {
+    margin: 50px auto 5px auto;
+    text-align: center;
+    justify-content: space-around;
+}
