@@ -5,7 +5,7 @@ import './App.css';
 import { db, auth } from './Firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { Button, Input, handleLogin } from '@material-ui/core';
+import { Button, Input } from '@material-ui/core';
 import UploadImage from './post/UploadImage'
 
 
@@ -34,36 +34,35 @@ const useStyles = makeStyles((theme) => ({
 function App() {
 
     const classes = useStyles();
-
-    // Modal States
     const [modalStyle] = useState(getModalStyle);
     const [posts, setPosts] = useState([]);
-    const [open, setOpen] = useState(false); // default value is false
+    const [open, setOpen] = useState(false); // Default value is false
 
+    // User Registration and Authentication using Firebase
     const [username, setUsername] = useState(''); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const [user, setUser] = useState(null);
 
     const [openLogIn, setOpenLogIn] = useState(false);
 
-    useEffect(()=>{ // treat this listener as the frontend listener
+    useEffect(()=>{ // treat this as the frontend listener
         // treat everything below as the backend listener
         const unsubscribe = auth.onAuthStateChanged((authUser) => { 
         // auth.OnAuthStateChanged is a listerner and each time a change is made, it will run the folowung code.
-        if (authUser) {
-            // user is logged in.
-            console.log(authUser);
-            setUser(authUser); // it will not be affected when the website refreshes because of cookies because of auth.onAuthStateChanged
-        } else {
-            // user is logged out.
-            setUser(null); // if the user is logged out, set the user back to null.
-        }
+            if (authUser) {
+                // user is logged in.
+                setUser(authUser); // it will not be affected when the website refreshes because of cookies and of auth.onAuthStateChanged
+            } else {
+                // user is logged out, set it back to null
+                setUser(null); 
+            }
         }) 
 
         return () => {
         // if the useEffect is run again, performs some cleanup before the run is re-run.
-        unsubscribe();
+            unsubscribe();
         }
 
     }, [user, username]);
@@ -75,7 +74,10 @@ function App() {
         db.collection('posts').onSnapshot(snapshot => {
         // map: a function that loops through every doc, just like a for-loop
         // data: all the properties of the document. In this case- caption, username, imageUrl
-        setPosts(snapshot.docs.map(doc => doc.data())); 
+            setPosts(snapshot.docs.map(doc => ({
+                id: doc.id,
+                post: doc.data()
+            }))); 
         })
 
     }, []);
@@ -86,9 +88,9 @@ function App() {
         auth
         .createUserWithEmailAndPassword(email,password)
         .then((authUser) => {
-        return authUser.user.updateProfile({
-            displayName: username
-        })
+            return authUser.user.updateProfile({
+                displayName: username
+            })
         })
         .catch((error) => alert(error.message))
 
@@ -100,9 +102,12 @@ function App() {
         
         auth
         .signInWithEmailAndPassword(email, password)
+        .then ((authUser) => {})
         .catch((error) => alert(error.message))
 
         setOpenLogIn(false);
+        setEmail("");
+        setPassword("");
     };
 
     {/* 
@@ -238,8 +243,8 @@ function App() {
         </div>
     
         {
-            posts.map(post => (
-            <Post username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+            posts.map(({id, post}) => (
+            <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
             ))
         }
 
