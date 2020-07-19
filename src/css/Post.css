@@ -1,0 +1,54 @@
+.post {
+    width: 70.5%;
+    background-color: white;
+    border: 1px solid rgb(215, 215, 215);
+    margin-top: 45px;
+    margin-left: 14.5%;
+    /*box-shadow: 0 1rem 2rem #363636;*/
+    display: inline-flex;
+    border-radius: 5px;
+}
+
+.post__image {
+    max-width: 500px;
+    object-fit: contain;
+}
+
+.post__text {
+    font-weight: normal;
+}
+
+.post__header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.post__avatar {
+    margin-right: 10px;
+}
+
+.post__text {
+    padding: 20px
+}
+
+.post__username__caption {
+    max-width: 500px;
+    padding: 10px;
+}
+
+.post__username__picture {
+    border-right: 1px solid rgb(215, 215, 215);
+}
+
+.upload-image {
+    margin: 50px auto 5px auto;
+    text-align: center;
+    justify-content: space-around;
+}
+
+.post__comment-input {
+    margin-top: 5px;
+    padding: 5px;
+    width: 110%;
+}

@@ -1,0 +1,21 @@
+.upload-image {
+    background-color: #dddddd;
+    width: 400px;
+    border-radius: 5px;
+}
+
+.upload-image--link {
+    font-size: 15px;
+    margin: 20px auto ;
+    color: #314455;
+    width: 200px;           
+}
+
+.upload-image--caption {
+    font-size: 15px;
+    width: 300px;
+    margin: 0 20px 15px 20px;
+    padding: 5px;
+    border:1px solid rgb(126, 126, 126);
+    border-radius: 2px;
+}

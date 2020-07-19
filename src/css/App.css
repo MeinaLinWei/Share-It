@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+}
+
+.app {
+  background-color: #edeae5;
+}
+
+.app__header {
+  background-color: #314455;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  object-fit: contain;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px 0 30px;
+  height: 100px;
+}
+
+.app__header-image {
+  height: 100px;
+  padding-left: 50px;
+}
+
+.nav {
+  float: right;
+  padding: 33px 20px 0 0;
+}
+
+.app__login-register {
+  font-size: 50px;
+}
+
+.app__login-register-welcome-text {
+  font-size: 20px;
+  margin:20px;
+}
