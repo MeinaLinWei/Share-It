@@ -4,13 +4,14 @@
     border: 1px solid rgb(215, 215, 215);
     margin-top: 45px;
     margin-left: 14.5%;
+    margin-right: 14.5%;
     /*box-shadow: 0 1rem 2rem #363636;*/
     display: inline-flex;
     border-radius: 5px;
 }
 
 .post__image {
-    max-width: 500px;
+    width: 500px;
     object-fit: contain;
 }
 
@@ -29,12 +30,7 @@
 }
 
 .post__text {
-    padding: 20px
-}
-
-.post__username__caption {
-    max-width: 500px;
-    padding: 10px;
+    padding: 30.5px;
 }
 
 .post__username__picture {
@@ -47,8 +43,19 @@
     justify-content: space-around;
 }
 
+.post__comment {
+    display: inline-flex;
+    width: 400px;
+}
+
 .post__comment-input {
-    margin-top: 5px;
-    padding: 5px;
-    width: 110%;
+    padding: 9px;
+    width: 300px;
+    border: 1px solid rgb(215, 215, 215);
+    font-size: 15px;
+    margin: 0 5px;
+}
+
+.post__comment-button {
+    float: right;
 }
