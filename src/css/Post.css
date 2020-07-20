@@ -1,17 +1,17 @@
 .post {
-    width: 70.5%;
+    width: 75%;
     background-color: white;
     border: 1px solid rgb(215, 215, 215);
     margin-top: 45px;
-    margin-left: 14.5%;
-    margin-right: 14.5%;
+    margin-left: 12.5%;
+    margin-right: 12.5%;
     /*box-shadow: 0 1rem 2rem #363636;*/
     display: inline-flex;
     border-radius: 5px;
 }
 
 .post__image {
-    width: 500px;
+    max-width: 500px;
     object-fit: contain;
 }
 
@@ -43,19 +43,72 @@
     justify-content: space-around;
 }
 
+.post__username__caption {
+    width: 450px;
+}
+
 .post__comment {
-    display: inline-flex;
-    width: 400px;
+    width: 100%
 }
 
 .post__comment-input {
-    padding: 9px;
-    width: 300px;
+    padding: 8px;
+    width: 75%;
     border: 1px solid rgb(215, 215, 215);
-    font-size: 15px;
-    margin: 0 5px;
+    font-size: 13px;
+    margin: 0 0 5px 5px;
 }
 
 .post__comment-button {
     float: right;
 }
+
+.post__comments-all {
+    padding: 0 10px 10px 10px;
+}
+
+@media screen and (max-width:1200px) {
+    .post {
+        margin-left: 10%;
+        margin-right:10%;
+        width:80%
+    }
+
+    .post__image {
+        max-width: 475px;
+        object-fit: contain;
+    }
+
+    .post__username__caption {
+        width: 475px;
+        object-fit: contain;
+    }
+
+    .post__comment-input {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width:1100px) {
+    .post {
+        margin-left: 7%;
+        margin-right:7%;
+        width:86%
+    }
+
+    .post__image {
+        max-width: 450px;
+        object-fit: contain;
+    }
+
+    .post__username__caption {
+        width: 450px;
+        object-fit: contain;
+    }
+
+    .post__comment-input {
+        width: 75%;
+    }
+}
+
+

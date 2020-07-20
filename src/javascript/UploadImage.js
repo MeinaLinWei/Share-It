@@ -6,7 +6,6 @@ import '../css/UploadImage.css';
 
 function UploadImage(username) { // destructuring 
     const [caption, setCaption] = useState('');
-    const [url, setUrl] = useState("");
     const [progress, setProgress] = useState(0);
     const [image, setImage] = useState(null);
 
@@ -23,7 +22,7 @@ function UploadImage(username) { // destructuring
             
             (snapshot) => {
                 //progress function
-                progress = Math.round(
+                const progress = Math.round(
                     (snapshot.bytesTransfered / snapshot.totalBytes) * 100
                 );
                 setProgress(progress);

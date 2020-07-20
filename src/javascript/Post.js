@@ -3,13 +3,22 @@ import Avatar from '@material-ui/core/Avatar';
 import { Button } from '@material-ui/core'
 import '../css/Post.css';
 import { db } from './Firebase';
+import firebase from 'firebase';
 
-function Post({postId, username, caption, imageUrl}) {
+function Post({postId, user, username, caption, imageUrl}) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState([]);
 
     const postComment = (event ) => {
+        event.preventDefault();
 
+        db.collection("posts").doc(postId).collection("comments").add({
+            text: comment,
+            username: user.displayName,
+            timestamp:firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        setComment('');
     }
 
     useEffect(() => {
@@ -20,12 +29,18 @@ function Post({postId, username, caption, imageUrl}) {
             .collection("posts")
             .doc(postId)
             .collection("comments")
+            .orderBy("timestamp","asc")
             .onSnapshot((snapshot) => {
                 setComments(snapshot.docs.map((doc) => doc.data()));
             });
         }
 
-    })
+        return () => {
+            unsubscribe();
+        }
+    }, [postId]);
+
+
     return (
         <div className="post">
             <div className="post__username__picture">
@@ -46,6 +61,7 @@ function Post({postId, username, caption, imageUrl}) {
                 {/* Username + Caption*/}
                 <h4 className="post__text"><strong>{username}</strong>: {caption}</h4>
 
+                {user && 
                 <div className="post__comment">
                     <form>
                         <input
@@ -57,7 +73,7 @@ function Post({postId, username, caption, imageUrl}) {
                         />
                         <Button
                             style={{
-                                fontSize: "15px",
+                                fontSize: "13px",
                                 color: "#314455",
                             }}
                             className="post__comment-button"
@@ -68,11 +84,13 @@ function Post({postId, username, caption, imageUrl}) {
                         Post
                     </Button>
                     </form>
-                </div>
-                <div className="post__comments__all">
+            </div>
+                }
+                
+                <div className="post__comments-all">
                         {comments.map((comment) => (
                             <p>
-                                <b>{comment.username}</b> {comment.text}
+                                <b>{comment.username}</b>: {comment.text}
                             </p>
                         ))}
                     </div>

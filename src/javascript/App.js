@@ -71,7 +71,7 @@ function App() {
     useEffect(()=> {
         
         // onSnapshot: every time a new post is added to the database, it is going to update and the code below will run.
-        db.collection('posts').onSnapshot(snapshot => {
+        db.collection('posts').orderBy("timestamp", "desc").onSnapshot(snapshot => {
         // map: a function that loops through every doc, just like a for-loop
         // data: all the properties of the document. In this case- caption, username, imageUrl
             setPosts(snapshot.docs.map(doc => ({
@@ -244,7 +244,7 @@ function App() {
     
         {
             posts.map(({id, post}) => (
-                <Post key={id} postId={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+                <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
             ))
         }
 
