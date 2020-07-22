@@ -14,11 +14,11 @@ function Post({postId, user, username, caption, imageUrl}) {
 
         db.collection("posts").doc(postId).collection("comments").add({
             text: comment,
-            username: user.displayName,
-            timestamp:firebase.firestore.FieldValue.serverTimestamp()
+            username: user.displayName, // use username of user currently signed in
+            timestamp:firebase.firestore.FieldValue.serverTimestamp() // use firebase universal time
         });
 
-        setComment('');
+        setComment(''); // set setComment back to empty
     }
 
     useEffect(() => {
@@ -29,7 +29,7 @@ function Post({postId, user, username, caption, imageUrl}) {
             .collection("posts")
             .doc(postId)
             .collection("comments")
-            .orderBy("timestamp","asc")
+            .orderBy("timestamp","asc") // sort posts in ascending order based on firebase time
             .onSnapshot((snapshot) => {
                 setComments(snapshot.docs.map((doc) => doc.data()));
             });
@@ -43,24 +43,25 @@ function Post({postId, user, username, caption, imageUrl}) {
 
     return (
         <div className="post">
-            <div className="post__username__picture">
+            <div className="post__username-picture">
                 <div className="post__header">
                     <Avatar 
                         className="post__avatar"
                         alt={username}
                         src="" 
                     />
-                    {/* Username */}
+                    {/* username of current user*/}
                     <h3>{username}</h3>
                 </div>
-                {/* Image*/}
+                {/* image */}
                 <img src={imageUrl} className="post__image"></img>
             </div>
 
-            <div className="post__username__caption">
-                {/* Username + Caption*/}
-                <h4 className="post__text"><strong>{username}</strong>: {caption}</h4>
+            <div className="post__username-caption">
+                {/* Username and Caption*/}
+                <h4 className="post__caption"><strong>{username}</strong>: {caption}</h4>
 
+                {/* current user wishing to post a comment on a picture */}
                 {user && 
                 <div className="post__comment">
                     <form>
@@ -84,19 +85,18 @@ function Post({postId, user, username, caption, imageUrl}) {
                         Post
                     </Button>
                     </form>
-            </div>
+                </div>
                 }
-                
-                <div className="post__comments-all">
+
+                {/* display all exisitng comments */}
+                <div className="post__comment-all">
                         {comments.map((comment) => (
                             <p>
                                 <b>{comment.username}</b>: {comment.text}
                             </p>
                         ))}
-                    </div>
+                </div>
             </div>
-            
-
         </div>
     )
 }
