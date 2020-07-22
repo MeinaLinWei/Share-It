@@ -10,13 +10,8 @@
     border-radius: 5px;
 }
 
-.post__image {
-    max-width: 500px;
-    object-fit: contain;
-}
-
-.post__text {
-    font-weight: normal;
+.post__username-picture {
+    border-right: 1px solid rgb(215, 215, 215);
 }
 
 .post__header {
@@ -29,22 +24,17 @@
     margin-right: 10px;
 }
 
-.post__text {
-    padding: 30.5px;
+.post__image {
+    width: 500px;
+    object-fit: contain;
 }
 
-.post__username__picture {
-    border-right: 1px solid rgb(215, 215, 215);
-}
-
-.upload-image {
-    margin: 50px auto 5px auto;
-    text-align: center;
-    justify-content: space-around;
-}
-
-.post__username__caption {
+.post__username-caption {
     width: 450px;
+}
+
+.post__caption {
+    padding: 30.5px;
 }
 
 .post__comment {
@@ -63,8 +53,14 @@
     float: right;
 }
 
-.post__comments-all {
+.post__comment-all {
     padding: 0 10px 10px 10px;
+}
+
+.upload-image {
+    margin: 50px auto 5px auto;
+    text-align: center;
+    justify-content: space-around;
 }
 
 @media screen and (max-width:1200px) {
@@ -79,7 +75,7 @@
         object-fit: contain;
     }
 
-    .post__username__caption {
+    .post__username-caption {
         width: 475px;
         object-fit: contain;
     }
@@ -101,7 +97,7 @@
         object-fit: contain;
     }
 
-    .post__username__caption {
+    .post__username-caption {
         width: 450px;
         object-fit: contain;
     }
@@ -112,3 +108,65 @@
 }
 
 
+@media screen and (max-width:1000px) {
+    .post {
+        margin-left: 5%;
+        margin-right:5%;
+        width:90%
+    }
+
+    .post__image {
+        max-width: 425px;
+        object-fit: contain;
+    }
+
+    .post__username-caption {
+        width: 425px;
+        object-fit: contain;
+    }
+
+    .post__comment-input {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width:900px) {
+    .post {
+        width: 450px;
+        background-color: white;
+        border: 1px solid rgb(215, 215, 215);
+        margin-top: 45px;
+        margin-left: auto;
+        margin-right: auto;
+        /*box-shadow: 0 1rem 2rem #363636;*/
+        display: flex;
+        flex-direction: column;
+        border-radius: 5px;
+    }
+
+    .post__username-picture {
+        border-right: 0;
+    }
+
+    .post__image {
+        max-width: 450px;
+        object-fit: contain;
+    }
+
+    .post__username-caption {
+        width: 450px;
+        object-fit: contain;
+    }
+
+    .post__caption {
+        padding: 20px 0 20px 10px;
+    }
+
+    .post__comment {
+        width: 100%;
+    }
+
+    .post__comment-input {
+        width: 80%;
+    }
+}
