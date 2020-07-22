@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import Post from './Post';
-import Logo from "../images/logo.svg";
-import '../css/App.css';
 import { db, auth } from './Firebase';
+import '../css/App.css';
+import Logo from "../images/logo.svg";
+import Post from './Post';
+import UploadImage from './UploadImage'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
-import UploadImage from './UploadImage'
 
 
 function getModalStyle() {
@@ -36,36 +36,37 @@ function App() {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const [posts, setPosts] = useState([]);
-    const [open, setOpen] = useState(false); // Default value is false
+    const [open, setOpen] = useState(false); // default value is false
 
-    // User Registration and Authentication using Firebase
+    // user registration and authentication using firebase
     const [username, setUsername] = useState(''); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null); // default value is null
 
     const [openLogIn, setOpenLogIn] = useState(false);
 
-    useEffect(()=>{ // treat this as the frontend listener
-        // treat everything below as the backend listener
-        const unsubscribe = auth.onAuthStateChanged((authUser) => { 
-        // auth.OnAuthStateChanged is a listerner and each time a change is made, it will run the folowung code.
+
+    // listener (front-end)
+    useEffect(()=>{ 
+        // listener (back-end)
+        const unsubscribe = auth.onAuthStateChanged((authUser) => { // auth.OnAuthStateChanged is a listerner. Each time a change is made, it will run the folowung code.
             if (authUser) {
-                // user is logged in.
+                // user is logged in
                 setUser(authUser); // it will not be affected when the website refreshes because of cookies and of auth.onAuthStateChanged
             } else {
-                // user is logged out, set it back to null
-                setUser(null); 
+                // user is logged out
+                setUser(null); // setUser back to null
             }
         }) 
 
         return () => {
-        // if the useEffect is run again, performs some cleanup before the run is re-run.
+        // if the useEffect is run again, performs some cleanup before the listener (back-end) is re-run
             unsubscribe();
         }
-
     }, [user, username]);
+
 
     // useEffect runs a piece of code based on a specific condition. For e.g: runs code when teh page refreshes
     useEffect(()=> {
@@ -73,15 +74,22 @@ function App() {
         // onSnapshot: every time a new post is added to the database, it is going to update and the code below will run.
         db.collection('posts').orderBy("timestamp", "desc").onSnapshot(snapshot => {
         // map: a function that loops through every doc, just like a for-loop
-        // data: all the properties of the document. In this case- caption, username, imageUrl
+        // data: all the properties of the document. In this case: caption, username, imageUrl
             setPosts(snapshot.docs.map(doc => ({
                 id: doc.id,
                 post: doc.data()
             }))); 
         })
-
     }, []);
+    {/* 
+        [] is variable and if we leave it blank, this means that the code will run once
+        when the App component loads, and will not run again.
 
+        [posts] means that the App component will run one time and run again when the details of posts changes
+    */}
+
+
+    // user registration using firebase
     const register = (event) => {
         event.preventDefault();
 
@@ -97,6 +105,8 @@ function App() {
         setOpen(false);
     };
 
+
+    // user authentication/sigin using firebase
     const logIn = (event) => {
         event.preventDefault();
         
@@ -110,12 +120,6 @@ function App() {
         setPassword("");
     };
 
-    {/* 
-        [] is variable and if we leave it blank, this means that the code will run once
-        when the App component loads, and will not run again.
-
-        [posts] means that the App component will run one time and run again when the details of posts changes
-    */}
 
     return (
         <div className="app">
@@ -124,13 +128,16 @@ function App() {
             open={openLogIn}
             onClose={() => setOpenLogIn(false)}
         >
-        
+
+            {/* login form using modal from material.ui */}
             <div style={modalStyle} className={classes.paper}>
                 <center>
                     <div className="app__login-register-welcome-text">
-                        Welcome back to SHARE IT! <br></br>
+                        Welcome back to SHARE IT! 
+                        <br></br>
                         It's nice to see you again 😄
                     </div>
+
                     <form className="app__login-register">
                         <Input
                             placeholder="email"
@@ -159,12 +166,15 @@ function App() {
             onClose={() => setOpen(false)}
         >
         
+            {/* registration form using modal from material.ui */}
             <div style={modalStyle} className={classes.paper}>
                 <center>
                     <div className="app__login-register-welcome-text">
-                        Welcome to SHARE IT ✨ <br></br>
+                        Welcome to SHARE IT ✨ 
+                        <br></br>
                         Please complete the form below to become a member.
                     </div>
+
                     <form className="app__login-register">
                         <Input
                             placeholder="username"
@@ -196,9 +206,9 @@ function App() {
         </Modal>
 
         {/* Header */}
-        <div className="app__header"><a href=""> <img className="app__header-image" src={Logo} alt="" /></a>
+        <div className="app__header"><a href=""><img className="app__header-image" src={Logo} alt="" /></a>
             <div className="nav">
-                { user ? (
+                { user ? ( // check if user is signed in or not. ? (...) : (...) is an if-else statement
                     <Button 
                         style={{
                             fontSize: "15px",
@@ -247,12 +257,6 @@ function App() {
                 <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
             ))
         }
-
-        {/*
-            Hypedinburgh" caption="Social distancing each letters cause why not?" imageUrl={Logo}/>
-            <Post username="Lina" caption="Waaaaa cute kitties" imageUrl={Cat}/>
-        */}
-
 
         </div>
     );

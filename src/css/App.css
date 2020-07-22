@@ -38,3 +38,9 @@
   font-size: 20px;
   margin:20px;
 }
+
+@media screen and (max-width: 550px) {
+  .app__header {
+    padding: 0;
+  }
+}
