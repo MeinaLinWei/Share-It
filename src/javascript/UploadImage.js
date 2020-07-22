@@ -1,29 +1,30 @@
 import React, { useState } from 'react'
-import { Button } from '@material-ui/core';
-import { storage, db } from './Firebase';
 import firebase from "firebase";
+import { storage, db } from './Firebase';
 import '../css/UploadImage.css';
+import { Button } from '@material-ui/core';
 
-function UploadImage(username) { // destructuring 
+function UploadImage({username}) { // destructuring 
     const [caption, setCaption] = useState('');
     const [progress, setProgress] = useState(0);
     const [image, setImage] = useState(null);
 
-    const handleChange = (e) => { // e: event, handleChange: a function
+    const handleChange = (e) => { // handleChange is a function
         if (e.target.files[0]) { // get the first file you have selected and 
             setImage(e.target.files[0]); // set the image in state to it.
         }
     }
 
     const handleUpload = () => {
-        const uploadTask = storage.ref(`images/${image.name}`).put(image); // access the storage in firebase and get a reference of the folder-images .name is the name of the file to uploaded and will be stored in the folder images in firebase. .put does put the image in the folder. basically uploading it to firebase storage
+        const uploadTask = storage.ref(`images/${image.name}`).put(image); // access the storage in firebase and get a reference of the folder-images. .name is the name of the file to uploaded and will be stored in the folder images in firebase. .put does put the image in the folder. basically uploading it to firebase storage
+        
         uploadTask.on(
             "state_changed",
-            
+
             (snapshot) => {
-                //progress function
+                // progress function ...
                 const progress = Math.round(
-                    (snapshot.bytesTransfered / snapshot.totalBytes) * 100
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                 );
                 setProgress(progress);
             },
@@ -33,12 +34,13 @@ function UploadImage(username) { // destructuring
                 console.log(error);
                 alert(error.message);
             },
+
             () => {
                 // complete function
                 storage
                 .ref("images")
                 .child(image.name)
-                .getDownloadURL() // get the Download link of the file from firebase
+                .getDownloadURL() // get the download link of the file from firebase
                 .then((url) => {
                     // post the image inside the database
                     db.collection("posts").add({
@@ -50,7 +52,7 @@ function UploadImage(username) { // destructuring
 
                     setProgress(0);
                     setCaption("");
-                    setImage(null);
+                    setImage('');
                 })
             }
         )
@@ -66,7 +68,9 @@ function UploadImage(username) { // destructuring
             />
             <br />
 
-            {/*<progress value={progress} max="100" /> */}
+            <progress className="imageupload__progress" value={progress} max="100" />
+            <br /><br />
+
             <input 
                 className="upload-image--caption"
                 type="text" 
